@@ -1,11 +1,19 @@
-import "./App.css";
+import React, { useState } from "react";
+//Styles
+import "./styles/app.scss";
+//Components
+import Player from "./components/player";
+import Song from "./components/song";
 
+import data from "./utils";
 function App() {
+  const [songs, setSongs] = useState(data());
+  const [currentSong, setCurrentSong] = useState(songs[0]);
   return (
-    <div >
-      <h1>Music Player</h1>
+    <div className="App">
+      <Song currentSong={currentSong} />
+      <Player currentSong={currentSong} />
     </div>
-
   );
 }
 
