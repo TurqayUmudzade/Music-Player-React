@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPlay,
@@ -18,9 +18,10 @@ const Player = ({
   setCurrentSong,
   setSongs,
 }) => {
-  useEffect(() => {
+  //!Set Animation Effect in Library
+  const activeLibraryHandler = (newSong) => {
     const newSongs = songs.map((song) => {
-      if (song.id === currentSong.id) {
+      if (song.id === newSong.id) {
         return {
           ...song,
           active: true,
@@ -28,7 +29,8 @@ const Player = ({
       } else return { ...song, active: false };
     });
     setSongs(newSongs);
-  }, [currentSong]);
+  };
+  //!Play and Pause
   const playSongHandler = () => {
     if (isPlaying) {
       audioRef.current.pause();
@@ -55,21 +57,24 @@ const Player = ({
 
   const skipTrackHandler = async (direction) => {
     let index = songs.findIndex((song) => song.id === currentSong.id);
-    if (direction === 1) setCurrentSong(songs[(index + 1) % songs.length]);
-    else if (direction === -1) {
+    if (direction === 1) {
+      await setCurrentSong(songs[(index + 1) % songs.length]);
+      activeLibraryHandler(songs[(index + 1) % songs.length]);
+    } else if (direction === -1) {
       if (index - 1 < 0) {
         await setCurrentSong(songs[songs.length - 1]);
+        activeLibraryHandler(songs[songs.length - 1]);
       } else {
         await setCurrentSong(songs[(index - 1) % songs.length]);
+        activeLibraryHandler(songs[(index - 1) % songs.length]);
       }
     }
     if (isPlaying) {
-      setTimeout(() => {
-        audioRef.current.play();
-      }, 1000);
+      audioRef.current.play();
     }
   };
 
+  //!CSS
   const trackAnimation = {
     transform: `translateX(${songInfo.animationPercentage}%)`,
   };
@@ -102,7 +107,6 @@ const Player = ({
           icon={faAngleLeft}
           onClick={() => skipTrackHandler(-1)}
         />
-
         <FontAwesomeIcon
           className="play"
           size="2x"
