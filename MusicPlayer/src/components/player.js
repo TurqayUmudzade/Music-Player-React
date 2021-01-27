@@ -7,12 +7,14 @@ import {
   faPause,
 } from "@fortawesome/free-solid-svg-icons";
 
-const Player = ({ audioRef, currentSong, isPlaying, setIsPlaying }) => {
-  const [songInfo, setSongInfo] = useState({
-    currentTime: 0,
-    duration: 0,
-  });
-
+const Player = ({
+  songInfo,
+  setSongInfo,
+  audioRef,
+  currentSong,
+  isPlaying,
+  setIsPlaying,
+}) => {
   const playSongHandler = () => {
     if (isPlaying) {
       audioRef.current.pause();
@@ -21,14 +23,6 @@ const Player = ({ audioRef, currentSong, isPlaying, setIsPlaying }) => {
       audioRef.current.play();
       setIsPlaying(!isPlaying);
     }
-  };
-
-  const timeUpdateHandler = (e) => {
-    setSongInfo({
-      ...songInfo,
-      currentTime: e.target.currentTime,
-      duration: e.target.duration,
-    });
   };
 
   const getTime = (time) => {

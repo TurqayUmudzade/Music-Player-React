@@ -186,4 +186,8 @@ h4 {
   border-radius: 20px;
   border: transparent;
 }
+
+.selected {
+  background: #c2d0fd;
+}
 /*# sourceMappingURL=app.css.map */
