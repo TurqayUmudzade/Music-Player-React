@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { playAudio } from "../util";
 import {
   faPlay,
   faAngleLeft,
@@ -54,17 +53,21 @@ const Player = ({
     });
   };
 
-  const skipTrackHandler = (direction) => {
+  const skipTrackHandler = async (direction) => {
     let index = songs.findIndex((song) => song.id === currentSong.id);
     if (direction === 1) setCurrentSong(songs[(index + 1) % songs.length]);
     else if (direction === -1) {
       if (index - 1 < 0) {
-        setCurrentSong(songs[songs.length - 1]);
+        await setCurrentSong(songs[songs.length - 1]);
       } else {
-        setCurrentSong(songs[(index - 1) % songs.length]);
+        await setCurrentSong(songs[(index - 1) % songs.length]);
       }
     }
-    playAudio(isPlaying, audioRef);
+    if (isPlaying) {
+      setTimeout(() => {
+        audioRef.current.play();
+      }, 1000);
+    }
   };
 
   const trackAnimation = {
