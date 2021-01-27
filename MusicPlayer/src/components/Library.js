@@ -1,4 +1,3 @@
-import { library } from "@fortawesome/fontawesome-svg-core";
 import React from "react";
 import LibrarySong from "./LibrarySong";
 
@@ -23,6 +22,7 @@ const Library = ({
           audioRef={audioRef}
           isPlaying={isPlaying}
           setSongs={setSongs}
+          key={song.id}
         />
       ))}
     </div>

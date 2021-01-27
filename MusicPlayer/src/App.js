@@ -6,7 +6,7 @@ import Player from "./components/Player";
 import Song from "./components/Song";
 import Library from "./components/Library";
 import Nav from "./components/Nav";
-import data from "./utils";
+import data from "./data";
 function App() {
   const [libraryStatus, setLibraryStatus] = useState(false);
   const [songs, setSongs] = useState(data());
@@ -38,6 +38,9 @@ function App() {
         isPlaying={isPlaying}
         songInfo={songInfo}
         setSongInfo={setSongInfo}
+        songs={songs}
+        setCurrentSong={setCurrentSong}
+        setSongs={setSongs}
       />
       <Library
         audioRef={audioRef}
